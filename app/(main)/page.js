@@ -1,12 +1,13 @@
 // import { CourseProgress } from "@/components/course-progress";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { formatPrice } from "@/lib/formatPrice";
+import { SectionTitle } from "@/components/section-title";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { getCategories } from "@/queries/categories";
 import { getCourseList } from "@/queries/courses";
-import { ArrowRight, ArrowRightIcon, BookOpen } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import CourseCard from "./courses/_components/CourseCard";
 
 const HomePage = async () => {
   const courses = await getCourseList();
@@ -38,7 +39,7 @@ const HomePage = async () => {
             way.”
           </p>
           <div className='flex items-center gap-3 flex-wrap justify-center'>
-            <Link href='' className={cn(buttonVariants({ size: "lg" }))}>
+            <Link href='courses' className={cn(buttonVariants({ size: "lg" }))}>
               Explore Now
             </Link>
             <Link
@@ -56,7 +57,7 @@ const HomePage = async () => {
         className='container space-y-6  py-8  md:py-12 lg:py-24'
       >
         <div className='flex items-center justify-between'>
-          {/* <SectionTitle>Categories</SectionTitle> */}
+          <SectionTitle>Categories</SectionTitle>
 
           <Link
             href={""}
@@ -91,7 +92,7 @@ const HomePage = async () => {
       {/* Courses */}
       <section id='courses' className='container space-y-6   md:py-12 lg:py-24'>
         <div className='flex items-center justify-between'>
-          {/* <SectionTitle>Courses</SectionTitle> */}
+          <SectionTitle>Courses</SectionTitle>
           <Link
             href={"/courses"}
             className=' text-sm font-medium  hover:opacity-80 flex items-center gap-1'
@@ -100,57 +101,8 @@ const HomePage = async () => {
           </Link>
         </div>
         <div className='grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4'>
-          {courses.map((course) => {
-            return (
-              <Link key={course.id} href={`/courses/${course.id}`}>
-                <div className='group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full'>
-                  <div className='relative w-full aspect-video rounded-md overflow-hidden'>
-                    <Image
-                      src={`/assets/images/courses/${course?.thumbnail}`}
-                      alt={course?.title}
-                      className='object-cover'
-                      fill
-                    />
-                  </div>
-                  <div className='flex flex-col pt-2'>
-                    <div className='text-lg md:text-base font-medium group-hover:text-sky-700 line-clamp-2'>
-                      {course?.title}
-                    </div>
-                    <p className='text-xs text-muted-foreground'>
-                      {course?.category?.title}
-                    </p>
-                    <div className='my-3 flex items-center gap-x-2 text-sm md:text-xs'>
-                      <div className='flex items-center gap-x-1 text-slate-500'>
-                        <div>
-                          <BookOpen className='w-4' />
-                        </div>
-                        <span>{course?.modules?.length} Chapters</span>
-                      </div>
-                    </div>
-
-                    {/* <CourseProgress
-                      size='sm'
-                      value={80}
-                      variant={110 === 100 ? "success" : ""}
-                    /> */}
-
-                    <div className='flex items-center justify-between mt-4'>
-                      <p className='text-md md:text-sm font-medium text-slate-700'>
-                        {formatPrice(course?.price, "BDT")}
-                      </p>
-
-                      <Button
-                        variant='ghost'
-                        className='text-xs text-sky-700 h-7 gap-1'
-                      >
-                        Enroll
-                        <ArrowRight className='w-3' />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            );
+          {courses.slice(0, 4).map((course) => {
+            return <CourseCard key={course.id} course={course} />;
           })}
         </div>
       </section>
