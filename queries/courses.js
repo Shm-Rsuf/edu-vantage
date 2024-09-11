@@ -53,6 +53,10 @@ export async function getCourseDetails(id) {
     .populate({
       path: "testimonials",
       model: Testimonial,
+      populate: {
+        path: "user",
+        model: User,
+      },
     })
     .populate({
       path: "modules",
