@@ -5,8 +5,8 @@ import Link from "next/link";
 
 const CourseDetailsIntro = ({ title, subtitle, thumbnail }) => {
   return (
-    <div className='overflow-x-hidden  grainy'>
-      <section className='pt-12  sm:pt-16'>
+    <div className='overflow-x-hidden grainy'>
+      <section className='pt-12 sm:pt-16'>
         <div className='container'>
           <div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
             <div className='max-w-2xl mx-auto text-center'>
@@ -36,7 +36,7 @@ const CourseDetailsIntro = ({ title, subtitle, thumbnail }) => {
             </div>
           </div>
 
-          <div className='pb-12  mt-6'>
+          <div className='pb-12 mt-6'>
             <div className='relative'>
               <div className='absolute inset-0 h-2/3'></div>
               <div className='relative mx-auto'>
