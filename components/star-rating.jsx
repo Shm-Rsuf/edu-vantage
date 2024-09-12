@@ -2,7 +2,6 @@ import Image from "next/image";
 
 const StarRating = ({ rating }) => {
   const stars = new Array(rating).fill(0);
-  console.log(stars);
 
   return (
     <>
