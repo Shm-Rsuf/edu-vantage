@@ -1,6 +1,10 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { dateFormate } from "@/lib/dateFormate";
+import { TabsContent } from "@radix-ui/react-tabs";
 import Image from "next/image";
+import CourseCurriculam from "./CourseCurriculam";
+import CourseInstructor from "./CourseInstructor";
+import CourseOverview from "./CourseOverview";
 // import { formatMyDate } from "@/lib/date";
 
 // import CourseCurriculam from "./CourseCurriculam";
@@ -13,7 +17,7 @@ const CourseDetails = ({ course }) => {
   return (
     <section className='py-8 md:py-12 lg:py-24'>
       <div className='container'>
-        <span className='bg-success rounded-full text-xs font-medium inline-block text-white bg-sky-500 px-4 py-2'>
+        <span className='rounded-full text-xs font-medium inline-block text-white bg-sky-400 px-4 py-2'>
           {course?.category?.title}
         </span>
         <h3 className='text-2xl md:text-3xl lg:text-4xl font-bold 2xl:text-5xl mt-3'>
@@ -47,18 +51,18 @@ const CourseDetails = ({ course }) => {
               <TabsTrigger value='overview'>Overview</TabsTrigger>
               <TabsTrigger value='curriculum'>Carriculum</TabsTrigger>
               <TabsTrigger value='instructor'>Instructor</TabsTrigger>
-              {/* <TabsTrigger value="reviews">Reviews</TabsTrigger> */}
+              {/* <TabsTrigger value='reviews'>Reviews</TabsTrigger> */}
             </TabsList>
-            {/* <TabsContent value='overview'> */}
-            {/* each tab content can be independent component */}
-            {/* <CourseOverview course={course} /> */}
-            {/* </TabsContent> */}
-            {/* <TabsContent value='curriculum'> */}
-            {/* <CourseCurriculam course={course} /> */}
-            {/* </TabsContent> */}
-            {/* <TabsContent value='instructor'> */}
-            {/* <CourseInstructor course={course} /> */}
-            {/* </TabsContent> */}
+            <TabsContent value='overview'>
+              {/* each tab content can be independent component */}
+              <CourseOverview course={course} />
+            </TabsContent>
+            <TabsContent value='curriculum'>
+              <CourseCurriculam course={course} />
+            </TabsContent>
+            <TabsContent value='instructor'>
+              <CourseInstructor course={course} />
+            </TabsContent>
           </Tabs>
         </div>
       </div>
