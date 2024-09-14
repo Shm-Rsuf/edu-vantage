@@ -7,10 +7,6 @@ import CourseInstructor from "./CourseInstructor";
 import CourseOverview from "./CourseOverview";
 // import { formatMyDate } from "@/lib/date";
 
-// import CourseCurriculam from "./CourseCurriculam";
-// import CourseInstructor from "./CourseInstructor";
-// import CourseOverview from "./CourseOverview";
-
 const CourseDetails = ({ course }) => {
   const lastModifiedDate = dateFormate(course.modifiedOn);
 
