@@ -8,6 +8,7 @@ import { Module } from "@/model/module.model";
 import { Testimonial } from "@/model/testimonial-model";
 import { User } from "@/model/user-model";
 import { getEnrollmentsForCourse } from "./enrollments";
+import { getTestimonialsForCourse } from "./testimonials";
 
 export async function getCourseList() {
   const courses = await Course.find({})
@@ -72,17 +73,28 @@ export async function getCourseDetailsByInstructor(instructorId) {
 
   const enrollments = await Promise.all(
     courses.map(async (course) => {
-      const enrollment = await getEnrollmentsForCourse(course._id.toString());
+      const enrollment = await getEnrollmentsForCourse(course._id);
       return enrollment;
     })
   );
 
-  // const totalEnrollments = enrollments.reduce((item, currentValue) => {
-  //   return item.length + currentValue.length;
-  // }, 0);
+  const testimonials = await Promise.all(
+    courses.map(async (course) => {
+      const testimonial = await getTestimonialsForCourse(course._id);
+      return testimonial;
+    })
+  );
+
+  const totalTestimonials = testimonials.flat(Infinity);
+
+  const ratings =
+    totalTestimonials.reduce((sum, review) => sum + review.rating, 0) /
+    totalTestimonials.length;
 
   return {
     courses: courses.length,
     enrollments: enrollments.flat(Infinity).length,
+    reviews: totalTestimonials.length,
+    ratings,
   };
 }
