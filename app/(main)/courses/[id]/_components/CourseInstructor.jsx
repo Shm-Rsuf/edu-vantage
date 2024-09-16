@@ -35,7 +35,7 @@ const CourseInstructor = async ({ course }) => {
               <li className='flex space-x-3'>
                 <UsersRound className='text-gray-600' />
                 <div>
-                  {/* {courseDetailsByInstructor?.enrollments} Student Learned */}
+                  {courseDetailsByInstructor?.enrollments} Student Learned
                 </div>
               </li>
               <li className='flex space-x-3'>
