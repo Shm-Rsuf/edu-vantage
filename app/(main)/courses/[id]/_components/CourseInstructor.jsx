@@ -9,6 +9,8 @@ const CourseInstructor = async ({ course }) => {
     instructor._id.toString()
   );
 
+  // console.log({ courseDetailsByInstructor });
+
   return (
     <div className='bg-gray-50 rounded-md p-8'>
       <div className='md:flex md:gap-x-5 mb-8'>
@@ -41,10 +43,11 @@ const CourseInstructor = async ({ course }) => {
               <li className='flex space-x-3'>
                 <MessageSquare className='text-gray-600' />
                 {/* <div>{courseDetailsByInstructor?.reviews} Reviews</div> */}
+                <div>{course?.testimonials?.length} Reviews</div>
               </li>
               <li className='flex space-x-3'>
                 <Star className='text-gray-600' />
-                {/* <div>{courseDetailsByInstructor?.ratings} Average Rating</div> */}
+                <div>{courseDetailsByInstructor?.ratings} Average Rating</div>
               </li>
             </ul>
           </div>
