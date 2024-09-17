@@ -1,6 +1,7 @@
 import { Accordion } from "@/components/ui/accordion";
 
 import { BookCheck, Clock10 } from "lucide-react";
+import CourseModuleList from "./module/CourseModuleList";
 
 const CourseCurriculam = ({ course }) => {
   const totalDuration = course?.modules.reduce(function (acc, obj) {
@@ -26,8 +27,10 @@ const CourseCurriculam = ({ course }) => {
         collapsible
         className='w-full'
       >
-        {/* {course?.modules &&
-          course?.modules.map((module) => <CourseModuleList module={module} />)} */}
+        {course?.modules &&
+          course?.modules.map((module) => (
+            <CourseModuleList key={module._id} module={module} />
+          ))}
       </Accordion>
     </>
   );
