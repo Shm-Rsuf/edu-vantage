@@ -11,8 +11,54 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
 
 export function SignupForm({ role }) {
+  const router = useRouter();
+  /* FormSubmit Handler Function */
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData(event.currentTarget);
+
+      const firstName = formData.get("first-name");
+      const lastName = formData.get("last-name");
+      const email = formData.get("email");
+      const password = formData.get("password");
+
+      const userRole =
+        role === "instructor" || role === "student" ? role : "student";
+
+      console.log({ firstName, lastName, email, password, userRole });
+
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          userRole,
+        }),
+      });
+      console.log(response);
+
+      response.status === 200 && router.push("/login");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // const handleFormSubmit = (event) => {
+  //   event.preventDefault();
+  //   const formData = new FormData(event.target);
+  //   const formValues = Object.fromEntries(formData.entries());
+  //   console.log(formValues);
+  // };
+
   return (
     <Card className='mx-auto max-w-sm'>
       <CardHeader>
@@ -22,7 +68,7 @@ export function SignupForm({ role }) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form onSubmit={handleFormSubmit}>
           <div className='grid gap-4'>
             <div className='grid grid-cols-2 gap-4'>
               <div className='grid gap-2'>
