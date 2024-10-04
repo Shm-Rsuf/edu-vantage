@@ -1,7 +1,7 @@
 "use client";
+
 import Link from "next/link";
 
-import { credentialsLogin } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,20 +12,24 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+import { ceredntialLogin } from "@/app/actions";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function LoginForm() {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const router = useRouter();
-  /* handleLoginSubmit */
-  const handleLoginSubmit = async (event) => {
+
+  async function onSubmit(event) {
     event.preventDefault();
 
     try {
       const formData = new FormData(event.currentTarget);
-      const response = await credentialsLogin(formData);
+      const response = await ceredntialLogin(formData);
 
+      router.push("/courses");
       if (!!response.error) {
         console.error(response.error);
         setError(response.error);
@@ -35,7 +39,7 @@ export function LoginForm() {
     } catch (e) {
       setError(e.message);
     }
-  };
+  }
 
   return (
     <Card className='mx-auto max-w-sm w-full'>
@@ -46,8 +50,7 @@ export function LoginForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {error && <p className='text-red-400 text-center'>{error}</p>}
-        <form onSubmit={handleLoginSubmit}>
+        <form onSubmit={onSubmit}>
           <div className='grid gap-4'>
             <div className='grid gap-2'>
               <Label htmlFor='email'>Email</Label>
@@ -75,8 +78,8 @@ export function LoginForm() {
           <p>
             Register as{" "}
             <Link href='/register/instructor' className='underline'>
-              Instructor{" "}
-            </Link>
+              Instructor
+            </Link>{" "}
             or{" "}
             <Link href='/register/student' className='underline'>
               Student

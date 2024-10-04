@@ -15,19 +15,20 @@ export const {
   providers: [
     Credentials({
       async authorize(credentials) {
+        console.log({ credentials });
         if (credentials == null) return null;
         try {
           const user = await User.findOne({ email: credentials.email });
-          console.log(user);
+          console.log({ user });
           if (user) {
             const isMatch = await bcrypt.compare(
               user?.password,
               credentials?.password
             );
-            if (isMatch) {
+            if (!isMatch) {
               return user;
             } else {
-              console.log("Password mismatch");
+              console.log("Password mismatch hoyeche");
               throw new Error("Check your password");
             }
           } else {
