@@ -1,8 +1,9 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import lwsLogo from "@/assets/lws_logo.svg";
 import { MobileNav } from "@/components/mobile-nav";
@@ -18,7 +19,14 @@ import {
 } from "./ui/dropdown-menu";
 
 export function MainNav({ items, children }) {
+  const { data: session } = useSession();
+
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [loginSession, setLoginSession] = useState(null);
+
+  useEffect(() => {
+    setLoginSession(session);
+  }, [session]);
 
   return (
     <>
@@ -47,29 +55,31 @@ export function MainNav({ items, children }) {
         )}
       </div>
       <nav className='flex items-center gap-3'>
-        <div className='items-center gap-3 hidden lg:flex'>
-          <Link
-            href='/login'
-            className={cn(buttonVariants({ size: "sm" }), "px-4")}
-          >
-            Login
-          </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant='outline' size='sm'>
-                Register
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='end' className='w-56 mt-4'>
-              <DropdownMenuItem className='cursor-pointer'>
-                <Link href='/register/student'>Student</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem className='cursor-pointer'>
-                <Link href='/register/instructor'>Instructor</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {!loginSession && (
+          <div className='items-center gap-3 hidden lg:flex'>
+            <Link
+              href='/login'
+              className={cn(buttonVariants({ size: "sm" }), "px-4")}
+            >
+              Login
+            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant='outline' size='sm'>
+                  Register
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end' className='w-56 mt-4'>
+                <DropdownMenuItem className='cursor-pointer'>
+                  <Link href='/register/student'>Student</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer'>
+                  <Link href='/register/instructor'>Instructor</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className='cursor-pointer'>
@@ -93,7 +103,9 @@ export function MainNav({ items, children }) {
               <Link href=''>Testimonials & Certificates</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className='cursor-pointer' asChild>
-              <Link href=''>Logout</Link>
+              <Link href='#' onClick={() => signOut()}>
+                Logout
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
