@@ -22,10 +22,10 @@ export const {
           console.log({ user });
           if (user) {
             const isMatch = await bcrypt.compare(
-              user?.password,
-              credentials?.password
+              credentials?.password, //age user e value, tarpore model er value
+              user?.password
             );
-            if (!isMatch) {
+            if (isMatch) {
               return user;
             } else {
               console.log("Password mismatch hoyeche");
