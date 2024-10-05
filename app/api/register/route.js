@@ -19,11 +19,13 @@ export async function POST(request) {
 
   try {
     await User.create(newUser);
-    return NextResponse.json({
-      message: "user has been created successfully",
+    return new NextResponse("User has been created", {
       status: 201,
     });
   } catch (error) {
-    return NextResponse.json({ message: error.message, status: 500 });
+    console.error(error);
+    return new NextResponse(error.message, {
+      status: 500,
+    });
   }
 }
