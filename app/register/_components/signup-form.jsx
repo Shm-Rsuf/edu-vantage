@@ -46,18 +46,11 @@ export function SignupForm({ role }) {
       });
       console.log(response);
 
-      response.status === 200 && router.push("/login");
+      response.status === 201 && router.push("/login");
     } catch (error) {
       console.log(error.message);
     }
   };
-
-  // const handleFormSubmit = (event) => {
-  //   event.preventDefault();
-  //   const formData = new FormData(event.target);
-  //   const formValues = Object.fromEntries(formData.entries());
-  //   console.log(formValues);
-  // };
 
   return (
     <Card className='mx-auto max-w-sm'>
