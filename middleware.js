@@ -13,6 +13,8 @@ export default auth((req) => {
     PUBLIC_ROUTE.find((route) => nextUrl.pathname.startsWith(route)) ||
     nextUrl.pathname === ROOT;
 
+  console.log(isPublicRoute);
+
   if (!isAuthenticated && !isPublicRoute) {
     return Response.redirect(new URL(LOGIN, nextUrl));
   }
