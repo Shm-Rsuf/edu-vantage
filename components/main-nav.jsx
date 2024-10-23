@@ -9,6 +9,7 @@ import lwsLogo from "@/assets/lws_logo.svg";
 import { MobileNav } from "@/components/mobile-nav";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button, buttonVariants } from "./ui/button";
 import {
@@ -20,6 +21,11 @@ import {
 
 export function MainNav({ items, children }) {
   const { data: session } = useSession();
+  console.log(session);
+
+  if (session?.error === "RefreshAccessTokenError") {
+    redirect("/login");
+  }
 
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [loginSession, setLoginSession] = useState(null);
