@@ -78,6 +78,13 @@ export async function getCourseDetailsByInstructor(instructorId) {
     })
   );
 
+  const totalEnrollments = enrollments.reduce(
+    (acc, enrollment) => acc + enrollment.length,
+    0
+  );
+
+  console.log({ totalEnrollments });
+
   const testimonials = await Promise.all(
     courses.map(async (course) => {
       const testimonial = await getTestimonialsForCourse(course._id);
@@ -93,7 +100,7 @@ export async function getCourseDetailsByInstructor(instructorId) {
 
   return {
     courses: courses.length,
-    enrollments: enrollments.flat(Infinity).length,
+    enrollments: totalEnrollments,
     reviews: totalTestimonials.length,
     ratings,
   };
