@@ -34,7 +34,7 @@ const CourseCard = ({ course }) => {
 
           <div className='flex items-center justify-between mt-4'>
             <p className='text-md md:text-sm font-medium text-slate-700'>
-              {formatPrice(course?.price)}
+              {formatPrice(course?.price, "bn-BD", "BDT")}
             </p>
 
             <EnrollmentCourse asLink={true} />
