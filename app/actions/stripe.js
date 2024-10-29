@@ -8,6 +8,9 @@ export async function createCheckoutSession(data) {
   const ui_mode = "hosted";
   const origin = headers().get("origin");
 
+  const courseId = data?.get("courseId");
+  const coursePrice = data?.get("coursePrice");
+
   const checkoutSession = await stripe.checkout.sessions.create({
     mode: "payment",
     payment_method_types: ["card"],
@@ -18,15 +21,14 @@ export async function createCheckoutSession(data) {
         price_data: {
           currency: CURRENCY,
           product_data: {
-            name: "data.name",
-            // images: [data.image],
+            name: data?.get("courseName"),
           },
-          unit_amount: formatAmountforStripe(1000, CURRENCY),
+          unit_amount: formatAmountforStripe(coursePrice, CURRENCY),
         },
       },
     ],
     ...(ui_mode === "hosted" && {
-      success_url: `${origin}/enroll-success?session_id={CHECKOUT_SESSION_ID}&courseId=12445`,
+      success_url: `${origin}/enroll-success?session_id={CHECKOUT_SESSION_ID}&courseId=${courseId}`,
 
       cancel_url: `${origin}/courses`,
     }),
@@ -42,7 +44,7 @@ export async function createCheckoutSession(data) {
 
 export async function createPaymentIntent(data) {
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: formatAmountforStripe(1000, CURRENCY),
+    amount: formatAmountforStripe(coursePrice, CURRENCY),
     currency: CURRENCY,
     automatic_payment_methods: {
       enabled: true,
