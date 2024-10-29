@@ -83,8 +83,6 @@ export async function getCourseDetailsByInstructor(instructorId) {
     0
   );
 
-  console.log({ totalEnrollments });
-
   const testimonials = await Promise.all(
     courses.map(async (course) => {
       const testimonial = await getTestimonialsForCourse(course._id);

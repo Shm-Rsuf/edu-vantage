@@ -41,7 +41,7 @@ const CourseCard = ({ course }) => {
           {formatPrice(course?.price, "bn-BD", "BDT")}
         </p>
 
-        <EnrollmentCourse asLink={true} />
+        <EnrollmentCourse asLink={true} course={course} />
       </div>
     </div>
   );
