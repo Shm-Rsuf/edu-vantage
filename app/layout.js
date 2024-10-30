@@ -21,7 +21,10 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang='en'>
-      <body className={cn(inter.className, poppins.className)}>
+      <body
+        className={cn(inter.className, poppins.className)}
+        suppressHydrationWarning={true}
+      >
         {children}
         <Toaster richColors position={"top-center"} />
       </body>
