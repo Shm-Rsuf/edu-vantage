@@ -5,11 +5,9 @@ import { ArrowRight } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 
 export const EnrollmentCourse = ({ asLink, course }) => {
-  console.log(course);
-
   /* handlaFormAction  */
   const handlaFormAction = async (data) => {
-    const { url } = await createCheckoutSession(data);
+    const { url } = await createCheckoutSession(JSON.stringify(data));
     window.location.assign(url);
   };
   return (
