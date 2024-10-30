@@ -21,7 +21,6 @@ import {
 
 export function MainNav({ items, children }) {
   const { data: session } = useSession();
-  console.log(session);
 
   if (session?.error === "RefreshAccessTokenError") {
     redirect("/login");
