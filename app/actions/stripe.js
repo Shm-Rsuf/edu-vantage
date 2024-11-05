@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 
 const CURRENCY = "usd";
 export async function createCheckoutSession(data) {
+  console.log(data);
   const ui_mode = "hosted";
   const origin = headers().get("origin");
 
