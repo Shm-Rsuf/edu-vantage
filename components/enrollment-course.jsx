@@ -7,7 +7,7 @@ import { Button, buttonVariants } from "./ui/button";
 export const EnrollmentCourse = ({ asLink, course }) => {
   /* handlaFormAction  */
   const handlaFormAction = async (data) => {
-    const { url } = await createCheckoutSession(JSON.stringify(data));
+    const { url } = await createCheckoutSession(data);
     window.location.assign(url);
   };
   return (
