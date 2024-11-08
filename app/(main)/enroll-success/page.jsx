@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
-import { sendEmails } from "@/lib/resend-email";
 import { stripe } from "@/lib/stripe";
 import { getCourseDetails } from "@/queries/courses";
+import { enrollForCourse } from "@/queries/enrollments";
 import { getUserByEmail } from "@/queries/user";
 import { CircleCheck } from "lucide-react";
 import Link from "next/link";
@@ -33,6 +33,15 @@ const Success = async ({ searchParams: { session_id, courseId } }) => {
   const paymentStatus = paymentIntent?.status;
 
   if (paymentStatus === "succeeded") {
+    // Update DB(Enrollment collection)
+    const enrolled = await enrollForCourse(
+      course?.id,
+      loggedInUser?.id,
+      "stripe"
+    );
+
+    console.log(enrolled);
+
     const instructorName = `${course?.instructor?.firstName} ${course?.instructor?.lastName}`;
     const instructorEmail = course?.instructor?.email;
 
@@ -49,8 +58,8 @@ const Success = async ({ searchParams: { session_id, courseId } }) => {
       },
     ];
 
-    const emailSentResponse = await sendEmails(emailsToSend);
-    console.log(emailSentResponse);
+    // const emailSentResponse = await sendEmails(emailsToSend);
+    // console.log(emailSentResponse);
   }
 
   return (
@@ -58,7 +67,7 @@ const Success = async ({ searchParams: { session_id, courseId } }) => {
       <div className='flex flex-col items-center gap-6 max-w-[600px] text-center'>
         {paymentStatus === "succeeded" && (
           <>
-            <CircleCheck className='w-32 h-32 bg-success rounded-full p-0 text-white' />
+            <CircleCheck className='w-32 h-32 bg-green-500 rounded-full p-0 text-white' />
             <h1 className='text-xl md:text-2xl lg:text-3xl'>
               Congratulations, <strong>{customerName}</strong>! Your Enrollment
               was Successful for <strong>{productName}</strong>
