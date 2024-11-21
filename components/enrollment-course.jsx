@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 
-export const EnrollmentCourse = ({ asLink, course }) => {
+export const EnrollmentCourse = ({ asLink, courseId }) => {
   /* handlaFormAction  */
   const handlaFormAction = async (data) => {
     const { url } = await createCheckoutSession(data);
@@ -13,9 +13,10 @@ export const EnrollmentCourse = ({ asLink, course }) => {
   return (
     <>
       <form action={handlaFormAction}>
-        <input type='hidden' name='courseId' value={course?.id} />
+        <input type='hidden' name='courseId' value={courseId} />
+        {/* 
         <input type='hidden' name='courseName' value={course?.title} />
-        <input type='hidden' name='coursePrice' value={course?.price} />
+        <input type='hidden' name='coursePrice' value={course?.price} /> */}
         {asLink ? (
           <Button
             variant='ghost'
