@@ -1,16 +1,23 @@
 "use server";
 import { stripe } from "@/lib/stripe";
 import { formatAmountforStripe } from "@/lib/stripe-helpers";
+import { getCourseDetails } from "@/queries/courses";
 import { headers } from "next/headers";
 
 const CURRENCY = "usd";
 export async function createCheckoutSession(data) {
-  console.log(data);
   const ui_mode = "hosted";
   const origin = headers().get("origin");
 
   const courseId = data?.get("courseId");
-  const coursePrice = data?.get("coursePrice");
+  const course = await getCourseDetails(courseId);
+
+  if (!course) {
+    throw new Error("Course not found");
+  }
+
+  const courseName = course?.title;
+  const coursePrice = course?.price;
 
   const checkoutSession = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -22,7 +29,7 @@ export async function createCheckoutSession(data) {
         price_data: {
           currency: CURRENCY,
           product_data: {
-            name: data?.get("courseName"),
+            name: courseName,
           },
           unit_amount: formatAmountforStripe(coursePrice, CURRENCY),
         },
