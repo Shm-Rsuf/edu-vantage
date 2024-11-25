@@ -1,8 +1,10 @@
 "use client";
+import { updatePassword } from "@/app/actions/account";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const ChangePassword = ({ email }) => {
   const [passwordState, setPasswordState] = useState({
@@ -24,6 +26,17 @@ const ChangePassword = ({ email }) => {
   const doPasswordChage = async (event) => {
     event.preventDefault();
     console.log(passwordState);
+    try {
+      await updatePassword(
+        email,
+        passwordState.oldPassword,
+        passwordState.newPassword
+      );
+      toast.success("password updated successfully.");
+    } catch (err) {
+      console.error(err);
+      toast.error("error: " + err.message);
+    }
   };
   return (
     <div>
