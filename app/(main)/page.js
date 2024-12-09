@@ -11,6 +11,7 @@ import CourseCard from "./courses/_components/CourseCard";
 
 const HomePage = async () => {
   const courses = await getCourseList();
+  console.log({courses});
   const categories = await getCategories();
   return (
     <>
