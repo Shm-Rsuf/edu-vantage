@@ -8,8 +8,6 @@ const EnrolledCourseCard = async ({ enrolledment }) => {
     enrolledment?.course?.category?._id
   );
 
-  console.log({ category });
-
   return (
     <div className='group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full'>
       <div className='group relative w-full aspect-video rounded-md overflow-hidden'>
